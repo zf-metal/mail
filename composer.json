@@ -1,0 +1,37 @@
+{
+    "name": "zf-metal/mail",
+    "description": "Modulo de envío de emails para Zend Framework 3",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "version": "0.0.1",
+    "homepage": "https://github.com/cincarnato",
+    "keywords": [
+        "zf3"
+    ],
+    "authors": [
+        {
+            "name": "Cristian Incarnato",
+            "email": "cincarnato@gmail.com",
+            "homepage": "http://cincarnato.com.ar/",
+            "role": "Desarrollador"
+        },
+         {
+            "name": "Alejandro Furgeri",
+            "email": "alecitoman@gmail.com",
+            "homepage": "http://afurgeri.com.ar/",
+            "role": "Desarrollador"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.6",
+        "zendframework/zend-mvc": "^3.0.4",
+        "zendframework/zend-mail": "^2.7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "ZfMetal\\Mail\\": "src/"
+        }
+
+    }
+}
