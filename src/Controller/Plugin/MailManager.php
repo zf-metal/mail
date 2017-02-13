@@ -8,22 +8,26 @@ class MailManager extends AbstractPlugin {
     
     /**
      *
-     * @var \ZfMetal\Mail\Mail
+     * @var \ZfMetal\Mail\MailManager
      */
     private $mail;
     
-    function getMail() {
+    public function __invoke() {
+        return $this->getMail();
+    }
+
+        public function getMail() {
         return $this->mail;
     }
 
-    function setMail(\ZfMetal\Mail\Mail $mail) {
+    function setMail(\ZfMetal\Mail\MailManager $mail) {
         $this->mail = $mail;
     }
 
-    function __construct(\ZfMetal\Mail\Mail $mail) {
+    function __construct(\ZfMetal\Mail\MailManager $mail) {
         $this->mail = $mail;
     }
-
+    
     
     
 }
