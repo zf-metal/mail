@@ -31,7 +31,7 @@ class MailManager {
         return $this->message;
     }
 
-    function __construct(\Zend\Mail\Transport\Smtp $transport, Zend\View\Renderer\PhpRenderer $viewRender) {
+    function __construct(\Zend\Mail\Transport\Smtp $transport, \Zend\View\Renderer\PhpRenderer $viewRender) {
         $this->transport = $transport;
         $this->message = new \Zend\Mail\Message();
         $this->viewRender = $viewRender;
