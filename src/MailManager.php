@@ -3,7 +3,7 @@
 namespace ZfMetal\Mail;
 
 use Zend\Log\LoggerAwareInterface;
-use Zend\Log\Logger;
+use Zend\Log\LoggerInterface;
 
 /**
  * Description of Mail
@@ -14,7 +14,7 @@ class MailManager implements LoggerAwareInterface {
 
     protected $logger;
 
-    public function setLogger(Logger $logger) {
+    public function setLogger(LoggerInterface $logger) {
         $this->logger = $logger;
     }
 
