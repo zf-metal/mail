@@ -2,12 +2,21 @@
 
 namespace ZfMetal\Mail;
 
+use Zend\Log\LoggerAwareInterface;
+use Zend\Log\Logger;
+
 /**
  * Description of Mail
  *
  * @author afurgeri
  */
-class MailManager {
+class MailManager implements LoggerAwareInterface {
+
+    protected $logger;
+
+    public function setLogger(Logger $logger) {
+        $this->logger = $logger;
+    }
 
     /**
      *
@@ -46,11 +55,16 @@ class MailManager {
     }
 
     public function send() {
+        if(!$this->getMessage()->getBody()){
+            $this->logger->error('El Body no está seteado.');
+            return false;
+        }
+        
         try {
             $this->getTransport()->send($this->getMessage());
             return true;
         } catch (Exception $exc) {
-            //LOG
+            $this->logger->error($exc->getMessage());
             return false;
         }
     }
@@ -111,12 +125,16 @@ class MailManager {
     }
 
     public function setTemplate($partial, $params = []) {
-
-        //RENDER TEMPLATE
-        $viewModel = new \Zend\View\Model\ViewModel();
-        $viewModel->setTemplate($partial);
-        $viewModel->setVariables($params);
-        $render = $this->viewRender->render($viewModel);
+        try {
+            //RENDER TEMPLATE
+            $viewModel = new \Zend\View\Model\ViewModel();
+            $viewModel->setTemplate($partial);
+            $viewModel->setVariables($params);
+            $render = $this->viewRender->render($viewModel);
+        } catch (Exception $exc) {
+            $this->logger->error($exc->getMessage());
+            return;
+        }
 
         //SET MIME PART
         $html = new \Zend\Mime\Part($render);
