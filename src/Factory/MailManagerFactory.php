@@ -15,7 +15,8 @@ class MailManagerFactory implements FactoryInterface {
         $transport = new $className;
 
         $transport->setOptions($smptOptions);
+        $viewRender = $container->get('ViewRenderer');
         
-        return new \ZfMetal\Mail\MailManager($transport);
+        return new \ZfMetal\Mail\MailManager($transport,$viewRender);        
     }
 }

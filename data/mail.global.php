@@ -6,7 +6,7 @@ return[
     'zf-metal-mail.options' => [
         'default-from' => 'info@security.com',
         'transport' => 'Zend\Mail\Transport\Smtp',
-        'transport-options' => [
+        'transport_options' => [
             'name' => 'example.com',
             'host' => '127.0.0.1',
             'port' => 587,
