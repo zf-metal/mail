@@ -1,15 +1,14 @@
 <?php
 
-namespace ZfMetal\Security;
-use Zend\ServiceManager\Factory\InvokableFactory;
+namespace ZfMetal\Mail;
 
 return [
     'controller_plugins' => [
         'factories' => [
-            \ZfMetal\Mail\Controller\Plugin\MailManager::class => \ZfMetal\Mail\Factory\Controller\Plugin\MailManager::class,
+            Controller\Plugin\MailManager::class => Factory\Controller\Plugin\MailManagerFactory::class,
         ],
         'aliases' => [
-            'mailManager' => \ZfMetal\Mail\Controller\Plugin\MailManager::class,
+            'mailManager' => Controller\Plugin\MailManager::class ,
         ]
     ]
 ];

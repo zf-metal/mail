@@ -6,7 +6,7 @@ return [
     'service_manager' => [
         'factories' => [
             'zf-metal-mail.options' => Factory\Options\ModuleOptionsFactory::class,
-            MailManager::class => Factory\MailManagerFactory::class,
+            \ZfMetal\Mail\MailManager::class => \ZfMetal\Mail\Factory\MailManagerFactory::class,
         ],
     ]
 ];

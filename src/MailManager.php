@@ -11,13 +11,13 @@ class MailManager {
 
     /**
      *
-     * @var \ZfMetal\Mail\Transport\TransportInterface
+     * @var \Zend\Mail\Transport\Smtp
      */
     private $transport;
 
     /**
      *
-     * @var Zend\Mail\Message 
+     * @var \Zend\Mail\Message
      */
     private $message;
 
@@ -25,7 +25,7 @@ class MailManager {
         return $this->message;
     }
 
-    function __construct(\ZfMetal\Mail\Transport\TransportInterface $transport) {
+    function __construct(\Zend\Mail\Transport\Smtp $transport) {
         $this->transport = $transport;
         $this->message = new \Zend\Mail\Message();
     }
@@ -34,7 +34,7 @@ class MailManager {
         return $this->transport;
     }
 
-    function setTransport(\ZfMetal\Mail\Transport\TransportInterface $transport) {
+    function setTransport(\Zend\Mail\Transport\Smtp $transport) {
         $this->transport = $transport;
     }
     

@@ -11,12 +11,13 @@ class MailManager extends AbstractPlugin {
      * @var \ZfMetal\Mail\MailManager
      */
     private $mail;
-    
-    public function __invoke() {
+
+    function __invoke()
+    {
         return $this->getMail();
     }
 
-        public function getMail() {
+    function getMail() {
         return $this->mail;
     }
 
@@ -27,7 +28,7 @@ class MailManager extends AbstractPlugin {
     function __construct(\ZfMetal\Mail\MailManager $mail) {
         $this->mail = $mail;
     }
-    
+
     
     
 }
