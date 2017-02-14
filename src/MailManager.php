@@ -56,15 +56,15 @@ class MailManager implements LoggerAwareInterface {
 
     public function send() {
         if(!$this->getMessage()->getBody()){
-            $this->logger->error('El Body no está seteado.');
+            $this->logger->err('El Body no está seteado.');
             return false;
         }
         
         try {
             $this->getTransport()->send($this->getMessage());
             return true;
-        } catch (Exception $exc) {
-            $this->logger->error($exc->getMessage());
+        } catch (\Exception $exc) {
+            $this->logger->err($exc->getMessage());
             return false;
         }
     }
@@ -131,8 +131,8 @@ class MailManager implements LoggerAwareInterface {
             $viewModel->setTemplate($partial);
             $viewModel->setVariables($params);
             $render = $this->viewRender->render($viewModel);
-        } catch (Exception $exc) {
-            $this->logger->error($exc->getMessage());
+        } catch (\Exception $exc) {
+            $this->logger->err($exc->getMessage());
             return;
         }
 
