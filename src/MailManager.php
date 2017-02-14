@@ -46,7 +46,13 @@ class MailManager {
     }
 
     public function send() {
-        $this->getTransport()->send($this->getMessage());
+        try {
+            $this->getTransport()->send($this->getMessage());
+            return true;
+        } catch (Exception $exc) {
+            //LOG
+            return false;
+        }
     }
 
     public function setBody($body) {
@@ -93,6 +99,7 @@ class MailManager {
         $this->getMessage()->setBcc($email);
         return $this;
     }
+
     public function addBcc($email) {
         $this->getMessage()->addBcc($email);
         return $this;
