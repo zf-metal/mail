@@ -20,7 +20,7 @@ class MailManager implements LoggerAwareInterface {
 
     /**
      *
-     * @var \Zend\Mail\Transport\Smtp
+     * @var \Zend\Mail\Transport\TransportInterface
      */
     private $transport;
 
@@ -40,7 +40,7 @@ class MailManager implements LoggerAwareInterface {
         return $this->message;
     }
 
-    function __construct(\Zend\Mail\Transport\Smtp $transport, \Zend\View\Renderer\PhpRenderer $viewRender) {
+    function __construct(\Zend\Mail\Transport\TransportInterface $transport, \Zend\View\Renderer\PhpRenderer $viewRender) {
         $this->transport = $transport;
         $this->message = new \Zend\Mail\Message();
         $this->viewRender = $viewRender;
@@ -50,7 +50,7 @@ class MailManager implements LoggerAwareInterface {
         return $this->transport;
     }
 
-    function setTransport(\Zend\Mail\Transport\Smtp $transport) {
+    function setTransport(\Zend\Mail\Transport\TransportInterface $transport) {
         $this->transport = $transport;
     }
 

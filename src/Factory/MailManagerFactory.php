@@ -14,9 +14,13 @@ class MailManagerFactory implements FactoryInterface {
         $className = $moduleOptions->getTransport();
         $transport = new $className;
 
-        $transport->setOptions($smptOptions);
+        if (method_exists($transport, 'setOptions')) {
+            $transport->setOptions($smptOptions);
+        }
+
         $viewRender = $container->get('ViewRenderer');
-        
-        return new \ZfMetal\Mail\MailManager($transport,$viewRender);        
+
+        return new \ZfMetal\Mail\MailManager($transport, $viewRender);
     }
+
 }
