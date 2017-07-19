@@ -152,4 +152,22 @@ class MailManager implements LoggerAwareInterface {
         return $this;
     }
 
+    public function attachFile($name, $path){
+        $file = new \Zend\Mime\Part(fopen($path, 'r'));
+        $file->filename = $name;
+        $file->disposition = \Zend\Mime\Mime::DISPOSITION_ATTACHMENT;
+        $file->encoding = \Zend\Mime\Mime::ENCODING_BASE64;
+        
+        $parts = $this->getMessage()->getBody()->getParts();
+        $parts[] = $file;
+
+        $body = new \Zend\Mime\Message();
+
+        $body->setParts($parts);
+
+        $this->getMessage()->setBody($body);
+
+        $contentTypeHeader = $this->getMessage()->getHeaders()->get('Content-Type');
+        $contentTypeHeader->setType('multipart/mixed');
+    }
 }
