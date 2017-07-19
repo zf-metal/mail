@@ -161,7 +161,7 @@ class MailManager implements LoggerAwareInterface {
         $parts = $this->getMessage()->getBody()->getParts();
         $parts[] = $file;
 
-        $body = new \Zend\Mime\Message();
+        $body = $this->getMessage()->getBody();
 
         $body->setParts($parts);
 
