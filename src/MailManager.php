@@ -13,6 +13,7 @@ use Zend\Log\LoggerInterface;
 class MailManager implements LoggerAwareInterface {
 
     protected $logger;
+    protected $encoding = 'utf8';
 
     public function setLogger(LoggerInterface $logger) {
         $this->logger = $logger;
@@ -43,6 +44,7 @@ class MailManager implements LoggerAwareInterface {
     function __construct(\Zend\Mail\Transport\TransportInterface $transport, \Zend\View\Renderer\PhpRenderer $viewRender) {
         $this->transport = $transport;
         $this->message = new \Zend\Mail\Message();
+        $this->message->getHeaders()->setEncoding($this->encoding);
         $this->viewRender = $viewRender;
     }
 
@@ -170,4 +172,23 @@ class MailManager implements LoggerAwareInterface {
         $contentTypeHeader = $this->getMessage()->getHeaders()->get('Content-Type');
         $contentTypeHeader->setType('multipart/mixed');
     }
+
+    /**
+     * @return string
+     */
+    public function getEncoding()
+    {
+        return $this->encoding;
+    }
+
+    /**
+     * @param string $encoding
+     */
+    public function setEncoding($encoding)
+    {
+        $this->encoding = $encoding;
+        $this->getMessage()->getHeaders()->setEncoding($this->encoding);
+    }
+
+
 }
