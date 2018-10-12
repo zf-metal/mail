@@ -61,7 +61,7 @@ class MailManager implements LoggerAwareInterface {
             $this->logger->err('El Body no está seteado.');
             return false;
         }
-        
+
         try {
             $this->getTransport()->send($this->getMessage());
             return true;
@@ -159,7 +159,7 @@ class MailManager implements LoggerAwareInterface {
         $file->filename = $name;
         $file->disposition = \Zend\Mime\Mime::DISPOSITION_ATTACHMENT;
         $file->encoding = \Zend\Mime\Mime::ENCODING_BASE64;
-        
+
         $parts = $this->getMessage()->getBody()->getParts();
         $parts[] = $file;
 
@@ -190,5 +190,35 @@ class MailManager implements LoggerAwareInterface {
         $this->getMessage()->getHeaders()->setEncoding($this->encoding);
     }
 
+    public function setBodyWithHtmlContent($content,$partial,$params)
+    {
+        //SET MIME PART
+        $html           = new \Zend\Mime\Part($content);
+        $html->type     = \Zend\Mime\Mime::TYPE_HTML;
+        $html->charset  = 'utf-8';
+        $html->encoding = \Zend\Mime\Mime::ENCODING_QUOTEDPRINTABLE;
+
+        try {
+            //RENDER TEMPLATE
+            $viewModel = new \Zend\View\Model\ViewModel();
+            $viewModel->setTemplate($partial);
+            $viewModel->setVariables($params);
+            $render = $this->viewRender->render($viewModel);
+        } catch (\Exception $exc) {
+            $this->logger->err($exc->getMessage());
+            return;
+        }
+
+        //SET MIME PART
+        $su = new \Zend\Mime\Part($render);
+        $su->type = \Zend\Mime\Mime::TYPE_HTML;
+        $su->charset = 'utf-8';
+        $su->encoding = \Zend\Mime\Mime::ENCODING_QUOTEDPRINTABLE;
+        //BUILD BODY
+        $body           = new \Zend\Mime\Message();
+        $body->setParts([$html,$su]);
+        $this->setBody($body);
+        return $this;
+    }
 
 }
