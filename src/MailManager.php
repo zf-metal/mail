@@ -4,6 +4,7 @@ namespace ZfMetal\Mail;
 
 use Zend\Log\LoggerAwareInterface;
 use Zend\Log\LoggerInterface;
+use ZfMetal\Mail\Part\HtmlPart;
 
 /**
  * Description of Mail
@@ -14,9 +15,14 @@ class MailManager implements LoggerAwareInterface {
 
     protected $logger;
     protected $encoding = 'utf8';
+    /**
+     * @var HtmlPart
+     */
+    protected $htmlParts;
 
     public function setLogger(LoggerInterface $logger) {
         $this->logger = $logger;
+        $this->htmlParts = new Part\HtmlPart();
     }
 
     /**
@@ -39,6 +45,14 @@ class MailManager implements LoggerAwareInterface {
 
     function getMessage() {
         return $this->message;
+    }
+
+    /**
+     * @return HtmlPart
+     */
+    public function getHtmlParts()
+    {
+        return $this->htmlParts;
     }
 
     function __construct(\Zend\Mail\Transport\TransportInterface $transport, \Zend\View\Renderer\PhpRenderer $viewRender) {
@@ -220,5 +234,36 @@ class MailManager implements LoggerAwareInterface {
         $this->setBody($body);
         return $this;
     }
+
+    public function addHtmlContentToBody($content)
+    {
+        $this->getHtmlParts()->addHtmlContent($content);
+        $this->setHtmlPartsOnBody();
+    }
+
+    public function addTemplateWithParams($template, $params = [])
+    {
+
+        try {
+            //RENDER TEMPLATE
+            $viewModel = new \Zend\View\Model\ViewModel();
+            $viewModel->setTemplate($template);
+            $viewModel->setVariables($params);
+            $render = $this->viewRender->render($viewModel);
+        } catch (\Exception $exc) {
+            $this->logger->err($exc->getMessage());
+            return;
+        }
+
+        $this->addHtmlContentToBody($render);
+    }
+
+    private function setHtmlPartsOnBody()
+    {
+        $body = new \Zend\Mime\Message();
+        $body->setParts([$this->getHtmlParts()]);
+        $this->setBody($body);
+    }
+
 
 }
