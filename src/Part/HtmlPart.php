@@ -11,12 +11,7 @@ class HtmlPart extends Part
     {
         parent::__construct($content);
         $this->setType(Mime::TYPE_HTML);
-        $html->charset = 'utf-8';
-        $html->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
-    }
-
-    public function addHtmlContent($content = '')
-    {
-        $this->content .= $content;
+        $this->charset = 'utf-8';
+        $this->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
     }
 }
