@@ -17,6 +17,11 @@ class ModuleOptions extends AbstractOptions {
      */
     private $transport;
 
+    /**
+     * @var string
+     */
+    private $defaultFrom;
+
     function getTransportOptions() {
         return $this->transportOptions;
     }
@@ -40,5 +45,23 @@ class ModuleOptions extends AbstractOptions {
         $this->__strictMode__ = false;
         parent::__construct($options);
     }
+
+    /**
+     * @return string
+     */
+    public function getDefaultFrom()
+    {
+        return $this->defaultFrom;
+    }
+
+    /**
+     * @param string $defaultFrom
+     */
+    public function setDefaultFrom($defaultFrom)
+    {
+        $this->defaultFrom = $defaultFrom;
+    }
+
+
 
 }
