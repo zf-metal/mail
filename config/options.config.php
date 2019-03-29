@@ -4,7 +4,7 @@ namespace ZfMetal\Security;
 
 return[
     'zf-metal-mail.options' => [
-        'default-from' => 'info@security.com',
+        'default_from' => 'info@zfmetal.com',
         'transport' => 'Zend\Mail\Transport\Smtp',
         'transport_options' => [
             'name' => 'example.com',
